@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, SafeAreaView, StyleSheet, Text } from "react-native";
+import Morph from "./Morph";
 
 export default function Home({ navigation }){
 
@@ -16,7 +17,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
+        backgroundColor: '#3d3d3d',
     },
     text: {
         textAlign: "center"

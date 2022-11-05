@@ -7,7 +7,7 @@ export default function AreaMap({ navigation, route}){
     const [markersCoords, setMarkersCoords] = React.useState([]);
 
     React.useEffect(() => {
-        if(route.params.areaPoints.length) setMarkersCoords(route.params.areaPoints);
+        setMarkersCoords(route.params.area);
     }, []);
 
     const handleMapPress = (e) => {
@@ -30,7 +30,7 @@ export default function AreaMap({ navigation, route}){
     }
 
     const handleFinish = () => {
-        route.params.setAreaPoints(markersCoords);
+        route.params.setArea(markersCoords);
         navigation.navigate('Group');
     }
 
@@ -38,8 +38,8 @@ export default function AreaMap({ navigation, route}){
         <SafeAreaView style={styles.container}>
             <MapView 
                 style={styles.map}
-                //showsUserLocation
-                //followsUserLocation
+                showsUserLocation
+                followsUserLocation
                 onPress={handleMapPress}
             >   
                 {markersCoords.map((coords, i) => 

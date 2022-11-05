@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet, SafeAreaView, TextInput, Button } from 'react-native';
 
-export default function CreateGroup({ navigation }){
+export default function CreateGroup({ navigation, route }){
 
-    const [areaPoints, setAreaPoints] = React.useState([]);
     const [name, setName] = React.useState('');
+    const [area, setArea] = React.useState([]);
 
     const createGroup = () => {
         fetch('http://localhost:3001/tigerhacks/createGroup', {
@@ -14,12 +14,13 @@ export default function CreateGroup({ navigation }){
             },
             body: JSON.stringify({
                 name: name,
-                area: areaPoints
+                area: area
             })
         })
         .then(res => res.json())
         .then(res => {
-            navigation.navigate('User', {groupId: res.groupId});
+            route.params.setGroup({ name, area, id: res._id })
+            navigation.navigate('User');
         })
         .catch(err => console.log(err));
     }
@@ -27,7 +28,7 @@ export default function CreateGroup({ navigation }){
     return(
         <SafeAreaView style={styles.container}>
             <TextInput style={styles.text} placeholder='Group Name' onChangeText={t => setName(t)}/>
-            <Button title={areaPoints.length ? 'Edit Area' : 'Create Area'} onPress={() => navigation.navigate('Area', {setAreaPoints: setAreaPoints, areaPoints: areaPoints})}/>
+            <Button title={area.length ? 'Edit Area' : 'Create Area'} onPress={() => navigation.navigate('Area', {area, setArea})}/>
             <Button title='Create Group' onPress={createGroup}/>
         </SafeAreaView>
     )
