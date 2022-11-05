@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
-export default function User({ navigation, route}){
+export default function User({ navigation, route }){
 
     const [name, setName] = React.useState('');
 
@@ -12,20 +12,22 @@ export default function User({ navigation, route}){
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
-                groupId: route.params.groupId,
+                groupId: route.params.group.id,
                 name: name
             })
         })
         .then(res => res.json())
         .then(res => {
-            console.log('Joined');
+            route.params.setUser({ name , id: res.user._id});
+            route.params.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
+            navigation.navigate('Menu');
         })
-        .catch(err => {});
+        .catch(err => console.log(err));
     }
 
     return(
         <SafeAreaView style={styles.container}>
-            <TextInput placeholder='Name' onChangeText={t => setName(t)}/>
+            <TextInput style={styles.text} placeholder='Name' onChangeText={t => setName(t)}/>
             <TouchableOpacity onPress={userJoin}>
                 <Text style={styles.text}>Join</Text>
             </TouchableOpacity>
