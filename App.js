@@ -7,6 +7,7 @@ import Home from './components/Home';
 import CreateGroup from "./components/CreateGroup";
 import AreaMap from "./components/AreaMap";
 import Join from "./components/Join";
+import User from "./components/User";
 
 LogBox.ignoreLogs(['Non-serializable values were found in the navigation state.']);
 
@@ -21,6 +22,7 @@ export default function App(){
           <Stack.Screen name='Group' component={CreateGroup} />
           <Stack.Screen name='Area' component={AreaMap} />
           <Stack.Screen name='Join' component={Join} />
+          <Stack.Screen name='User' component={User} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

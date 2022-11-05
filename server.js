@@ -24,10 +24,7 @@ function createNewGroup(groupOpts) {
   return gId;
 }
 
-function addToGroup(user, groupId) {
-  if (groupId) {
-    user['groupId'] = groupId;
-  }
+function addToGroup(user) {
   MongoClient.connect(URL, (err, db) => {
     if (err) throw err;
     let dbo = db.db(DB_NAME);
@@ -71,7 +68,8 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.post('/tigerhacks/createGroup', (req, res) => {
   const newGroup = req.body;
-  let groupId = createNewGroup(newGroup.groupOpts);
+  console.log(newGroup)
+  let groupId = createNewGroup(newGroup);
   res.send({
     error: false,
     message: 'Success. Sending group id.',
@@ -90,6 +88,6 @@ app.post('/tigerhacks/canJoinGroup', (req, res) => {
 
 app.post('/tigerhacks/userJoinGroup', (req, res) => {
   const user = req.body;
-  addToGroup(user.name, user.groupId);
+  addToGroup(user);
   res.send({error: false, message: 'Success. User added to group.'});
 });
