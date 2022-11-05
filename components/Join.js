@@ -1,3 +1,4 @@
+import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function Join({ navigation, route}){
@@ -5,7 +6,7 @@ export default function Join({ navigation, route}){
     const [groupId, setGroupId] = React.useState('');
 
     const checkGroupId = () => {
-        fetch('localhost:3001/tigerhacks/canJoinGroup', {
+        fetch('http://localhost:3001/tigerhacks/canJoinGroup', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -16,7 +17,7 @@ export default function Join({ navigation, route}){
         })
         .then(res => res.json())
         .then(res => {
-            res.err ? console.log('No Group With That Code') : navigation.navigate('User', {groupId: groupId})
+            console.log(res);
         })
         .catch(err => {});
     }

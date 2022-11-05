@@ -1,3 +1,4 @@
+import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 export default function User({ navigation, route}){
@@ -5,7 +6,7 @@ export default function User({ navigation, route}){
     const [name, setName] = React.useState('');
 
     const userJoin = () => {
-        fetch('localhost:3001/tigerhacks/userJoinGroup', {
+        fetch('http://localhost:3001/tigerhacks/userJoinGroup', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'

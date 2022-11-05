@@ -7,7 +7,7 @@ export default function CreateGroup({ navigation }){
     const [name, setName] = React.useState('');
 
     const createGroup = () => {
-        fetch('localhost:3001/tigerhacks/createGroup', {
+        fetch('http://localhost:3001/tigerhacks/createGroup', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -21,7 +21,7 @@ export default function CreateGroup({ navigation }){
         .then(res => {
             navigation.navigate('User', {groupId: res.groupId});
         })
-        .catch(err => {});
+        .catch(err => console.log(err));
     }
 
     return(
