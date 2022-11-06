@@ -187,7 +187,7 @@ function checkEvents(userId, groupId) {
       let dbo = db.db(DB_NAME);
       let events = dbo.collection('events').find({groupId: groupId});
       events.forEach((event, i) => {
-        if (!event.sentTo.includes(userId) && event._id !== userId) {
+        if (!event.sentTo.includes(new ObjectId(userId)) && event._id !== userId) {
           notis.push(userId);
           updateSentTo(event._id, [...event.sentTo, new ObjectId(userId)]).then(() => {
             if (i === events.length - 1) resolve(notis);

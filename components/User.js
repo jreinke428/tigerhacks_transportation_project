@@ -1,27 +1,28 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import globals from "../globals";
 
-export default function User({ navigation, route }){
+export default function User({ navigation }){
 
     const [name, setName] = React.useState('');
 
+    const globals = React.useContext(globals);
+
     const userJoin = () => {
-        console.log(route.params);
         fetch('http://localhost:3001/tigerhacks/userJoinGroup', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
-                groupId: route.params.group.id,
+                groupId: globals.group.id,
                 name: name
             })
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
-            route.params.setUser({ name , id: res.user._id});
-            route.params.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
+            globals.setUser({ name , id: res.user._id});
+            globals.params.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
             navigation.navigate('Menu');
         })
         .catch(err => console.log(err));

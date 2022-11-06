@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, StyleSheet, SafeAreaView, TextInput, Button } from 'react-native';
+import globals from '../globals';
 
-export default function CreateGroup({ navigation, route }){
+export default function CreateGroup({ navigation }){
 
     const [name, setName] = React.useState('');
     const [area, setArea] = React.useState([]);
+
+    const globals = React.useContext(globals);
 
     const createGroup = () => {
         fetch('http://localhost:3001/tigerhacks/createGroup', {
@@ -19,8 +22,8 @@ export default function CreateGroup({ navigation, route }){
         })
         .then(res => res.json())
         .then(res => {
-            route.params.setGroup({ name, area, id: res.groupId });
-            navigation.navigate('User', {group: {id: res.groupId}});
+            globals.setGroup({ name, area, id: res.groupId });
+            navigation.navigate('User');
         })
         .catch(err => console.log(err));
     }
