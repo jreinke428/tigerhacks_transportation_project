@@ -51,3 +51,8 @@ app.post('/tigerhacks/locationUpdate', (req, res) => {
       });
   });
 });
+
+app.post('/tigerhacks/getGroupLocations', (req, res) => {
+  const arr = service.getGroupLocations(req.body.groupId, req.body.userId)
+  res.send({error: false, message: '', locations: arr})
+})

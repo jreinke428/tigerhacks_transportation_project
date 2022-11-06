@@ -143,7 +143,7 @@ function updateLocation(user, area) {
         dbo.collection('events').findOne(query, (err, res) => {
           console.log(res);
           if (res) {
-            console.log("event found");
+            console.log('event found');
             if (!isPointOutside(area, curLoc)) {
               console.log('im finna delete');
               dbo.collection('events').findOneAndDelete(query);
@@ -152,7 +152,7 @@ function updateLocation(user, area) {
               resolve();
             }
           } else {
-            console.log("event not found")
+            console.log('event not found');
             if (isPointOutside(area, curLoc)) {
               dbo.collection('events').insertOne(
                 {
@@ -187,11 +187,16 @@ function checkEvents(userId, groupId) {
       let dbo = db.db(DB_NAME);
       let events = dbo.collection('events').find({groupId: groupId});
       events.forEach((event, i) => {
-        if (!event.sentTo.includes(new ObjectId(userId)) && event._id !== userId) {
+        if (
+          !event.sentTo.includes(new ObjectId(userId)) &&
+          event._id !== userId
+        ) {
           notis.push(userId);
-          updateSentTo(event._id, [...event.sentTo, new ObjectId(userId)]).then(() => {
-            if (i === events.length - 1) resolve(notis);
-          });
+          updateSentTo(event._id, [...event.sentTo, new ObjectId(userId)]).then(
+            () => {
+              if (i === events.length - 1) resolve(notis);
+            },
+          );
         }
       });
     });
@@ -209,13 +214,33 @@ function updateSentTo(eventId, newSentTo) {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
-      dbo.collection('events').updateOne({_id: new ObjectId(eventId)}, update, (err, res) => {
-        console.log(res);
-        if (err) throw err;
-        db.close();
-        resolve();
-      });
+      dbo
+        .collection('events')
+        .updateOne({_id: new ObjectId(eventId)}, update, (err, res) => {
+          console.log(res);
+          if (err) throw err;
+          db.close();
+          resolve();
+        });
     });
+  });
+}
+
+function getGroupLocations(groupId, userId) {
+  // user id coming from client so needs to become object
+  const query = {
+    groupId: groupId,
+    _id: {$ne: new ObjectId(userId)},
+  };
+  MongoClient.connect(URL, (err, db) => {
+    if (err) throw err;
+    let dbo = db.db(DB_NAME);
+    let users = dbo.collection('users').find(query);
+    users.map(user => {
+      return {name: user.name, lkLoc: user.lkLoc, id: user._id};
+    });
+    db.close();
+    return users; // returns an array of users
   });
 }
 
@@ -227,4 +252,5 @@ module.exports = {
   updateLocation,
   wipeMongo,
   checkEvents,
+  getGroupLocations
 };
