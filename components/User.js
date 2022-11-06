@@ -9,6 +9,7 @@ import {
   Button,
 } from 'react-native';
 import {context} from '../globals';
+import BackButton from './BackButton';
 
 export default function User({navigation}) {
   const [name, setName] = React.useState('');

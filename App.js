@@ -72,7 +72,7 @@ export default function App() {
           <Stack.Screen
             name="Menu"
             component={Menu}
-            options={{headerBackVisible: false, headerStyle: {backgroundColor: '262b2b'}}}
+            options={{headerBackVisible: false, headerStyle: {backgroundColor: '#262b2b'}, headerTitleStyle: {color: 'white', fontWeight: 'bold'}}}
           />
         </Stack.Navigator>
       </NavigationContainer>
