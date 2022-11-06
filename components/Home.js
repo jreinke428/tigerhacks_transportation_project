@@ -1,22 +1,28 @@
 import React from "react";
-import { Button, SafeAreaView, StyleSheet, Text, View } from "react-native";
+const logo = require('../tabs.png');
+import { Button, SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 
 export default function Home({ navigation }){
 
     return(
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Tabs</Text>
-            <View style={styles.horizontal}>
-                <View style={styles.neomorphTop}>
-                    <View style={styles.neomorphBottom}>
-                        <View style={styles.neomorphInner}>
-                            <Text>Hello</Text> 
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <Button onPress={() => navigation.navigate('Group')} title='Create Group' />
-            <Button onPress={() => navigation.navigate('Join')} title='Join Group' />
+            <Image source={logo}></Image>
+            <TouchableOpacity style={[styles.neomorphTop, styles.horizontal]}>
+                <TouchableOpacity style={styles.neomorphBottom}>
+                    <TouchableOpacity style={styles.neomorphInner}>
+                        <Button onPress={() => navigation.navigate('Group')} title='Create Group          ' color='#FFFFFF'/>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.neomorphTop, styles.horizontal]}>
+                <TouchableOpacity style={styles.neomorphBottom}>
+                    <TouchableOpacity style={styles.neomorphInner}>
+                        <Button onPress={() => navigation.navigate('Join')} title='Join Group              ' color='#FFFFFF'/>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </TouchableOpacity>
+            
+            
         </SafeAreaView>
     )
 }
@@ -26,10 +32,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignContent: 'center',
-        backgroundColor: '#3d3d3d',
+        backgroundColor: '#262b2b',
     },
     horizontal: {
         flexDirection: 'row',
+        flexGrow: 0,
         justifyContent: 'center',
         alignContent: 'center',
     },
@@ -37,19 +44,25 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     neomorphInner: {
-        backgroundColor: '#0000',
+        backgroundColor: '#262b2b',
         borderWidth: 1,
-        borderColor: '#3d3d3d',
-        padding: 10
+        borderColor: '#262b2b',
+        padding: 10,
+        borderRadius: 5
     },
     neomorphTop: {
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowRadius: 10,
+        shadowColor: '#2F3135',
+        shadowRadius: 5,
         shadowOpacity: 1,
-        shadowOffset: { width: -5, height: -5}
+        shadowOffset: { width: -5, height: -5},
+        marginTop: 30
     },
     neomorphBottom: {
-
+        borderRadius: 10,
+        shadowColor: '#232427',
+        shadowRadius: 5,
+        shadowOpacity: 1,
+        shadowOffset: { width: 5, height: 5}
     }
 })
