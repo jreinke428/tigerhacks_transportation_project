@@ -44,16 +44,18 @@ app.post('/tigerhacks/userJoinGroup', (req, res) => {
 app.post('/tigerhacks/locationUpdate', (req, res) => {
   const userInfo = req.body; // {user: {_id, name, groupId, lkLoc, isOutside}, area: [{lat, long}]}
   service.updateLocation(userInfo.user, userInfo.area).then(() => {
-    console.log('about to check events');
     service
       .checkEvents(userInfo.user.id, userInfo.user.groupId)
       .then(result => {
+        console.log('final result ',result);
         res.send({error: false, notifications: result});
       });
   });
 });
 
 app.post('/tigerhacks/getGroupLocations', (req, res) => {
-  const arr = service.getGroupLocations(req.body.groupId, req.body.userId)
-  res.send({error: false, message: '', locations: arr})
+  service.getGroupLocations(req.body.groupId, req.body.userId)
+  .then(result => {
+    res.send({error: false, message: '', locations: result});
+  })
 })

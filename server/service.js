@@ -139,7 +139,6 @@ function updateLocation(user, area) {
       let dbo = db.db(DB_NAME);
       dbo.collection('users').updateOne(query, update, (err, res) => {
         //console.log('res ' + JSON.stringify(res));
-        console.log(res);
         if (err) throw err;
         dbo.collection('events').findOne(query, (err, res) => {
           console.log(res);
@@ -147,8 +146,7 @@ function updateLocation(user, area) {
           if (res) {
             if (!outside) {
               console.log('im finna delete');
-              dbo.collection('events').findOneAndDelete(query);
-              resolve();
+              dbo.collection('events').findOneAndDelete(query).then(() => resolve());
             } else {
               resolve();
             }
@@ -195,6 +193,8 @@ function checkEvents(userId, groupId) {
             .then(() => {
               if(i === result.length-1) resolve(notis);
             })
+          }else{
+            resolve(notis);
           }
         }
         if(result.length === 0) resolve(notis);
@@ -232,15 +232,15 @@ function getGroupLocations(groupId, userId) {
     groupId: groupId,
     _id: {$ne: new ObjectId(userId)},
   };
-  MongoClient.connect(URL, (err, db) => {
-    if (err) throw err;
-    let dbo = db.db(DB_NAME);
-    let users = dbo.collection('users').find(query);
-    users.map(user => {
-      return {name: user.name, lkLoc: user.lkLoc, id: user._id};
+  return new Promise(resolve => {
+    MongoClient.connect(URL, (err, db) => {
+      if (err) throw err;
+      let dbo = db.db(DB_NAME);
+      dbo.collection('users').find(query).toArray((err, result) => {
+        db.close();
+        resolve(result.map(user => ({...user, id: user._id})))
+      });
     });
-    db.close();
-    return users; // returns an array of users
   });
 }
 

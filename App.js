@@ -40,8 +40,9 @@ Notifications.setNotificationHandler({
 export default function App() {
 
   React.useEffect(() => {
+    checkNotifications();
     return () => BackgroundGeolocation.stopWatchPosition();
-  });
+  }, []);
 
   const [group, setGroup] = React.useState({name: '', area: [], id: ''});
   const [user, setUser] = React.useState({name: '', id: ''});
@@ -79,6 +80,10 @@ export default function App() {
   );
 }
 
+const checkNotifications = () => {
+  Notifications.requestPermissionsAsync();
+}
+
 const startLocation = (user, group) => {
   BackgroundGeolocation.ready(
     {
@@ -108,23 +113,23 @@ const startLocation = (user, group) => {
               area: group.area,
             }),
           })
-            .then(res => res.json())
-            .then(res => {
-              console.log('res', res);
-              if (res.notifications.length) {
-                Notifications.scheduleNotificationAsync({
-                  content: {
-                    title: 'Notification',
-                    body:
-                      res.notifications.join(' ,') +
-                      (res.notifications.length > 1 ? ' have' : ' has') +
-                      ' left the perimeter.',
-                    data: {data: 'goes here'},
-                  },
-                  trigger: {seconds: 1},
-                });
-              }
-            });
+          .then(res => res.json())
+          .then(res => {
+            console.log('res', res);
+            if (res.notifications.length) {
+              Notifications.scheduleNotificationAsync({
+                content: {
+                  title: 'Notification',
+                  body:
+                    res.notifications.join(' ,') +
+                    (res.notifications.length > 1 ? ' have' : ' has') +
+                    ' left the perimeter.',
+                  data: {data: 'goes here'},
+                },
+                trigger: {seconds: 1},
+              });
+            }
+          });
         },
         errorCode => {
           console.log('error: ', errorCode);
