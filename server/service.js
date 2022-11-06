@@ -1,4 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
 var classifyPoint = require('robust-point-in-polygon');
 const URL = 'mongodb://localhost:27017/';
 const DB_NAME = 'test';
@@ -81,12 +82,26 @@ function canJoinGroup(groupId) {
 }
 
 function removeFromGroup(user) {
-  const query = {_id: user._id};
+  const query = {_id: user.id};
   return new Promise((resolve, reject) => {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
       dbo.collection('users').deleteOne(query, (err, res) => {
+        if (err) throw err;
+        resolve(res);
+      });
+    });
+  });
+}
+
+function findById(userId) {
+  const query = {_id: new ObjectId(userId)};
+  return new Promise((resolve, reject) => {
+    MongoClient.connect(URL, (err, db) => {
+      if (err) throw err;
+      let dbo = db.db(DB_NAME);
+      dbo.collection('users').findOne(query, (err, res) => {
         if (err) throw err;
         resolve(res);
       });
@@ -108,7 +123,7 @@ function isPointOutside(area, lkLoc) {
 // Updates user location and determines if user is outside of geofence.
 function updateLocation(user, area) {
   console.log(`Updating location ${user.name}`);
-  const query = {_id: user.id};
+  const query = {_id: new ObjectId(user.id)};
   const curLoc = {
     latitude: user.lkLoc.latitude,
     longitude: user.lkLoc.longitude,
@@ -123,23 +138,27 @@ function updateLocation(user, area) {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
       dbo.collection('users').updateOne(query, update, (err, res) => {
-        console.log('res '+JSON.stringify(res));
+        //console.log('res ' + JSON.stringify(res));
         if (err) throw err;
-        dbo.collection('events').findOne({_id: user.id}, (err, res) => {
+        dbo.collection('events').findOne(query, (err, res) => {
+          console.log(res);
           if (res) {
+            console.log("event found");
             if (!isPointOutside(area, curLoc)) {
+              console.log('im finna delete');
               dbo.collection('events').findOneAndDelete(query);
               resolve();
-            }else{
+            } else {
               resolve();
             }
           } else {
+            console.log("event not found")
             if (isPointOutside(area, curLoc)) {
               dbo.collection('events').insertOne(
                 {
-                  _id: user._id,
+                  _id: new ObjectId(user.id),
                   name: user.name,
-                  sentTo: [user._id],
+                  sentTo: [new ObjectId(user.id)],
                   groupId: user.groupId,
                 },
                 (err, res) => {
@@ -147,7 +166,7 @@ function updateLocation(user, area) {
                   resolve();
                 },
               );
-            }else{
+            } else {
               resolve();
             }
           }
@@ -166,12 +185,12 @@ function checkEvents(userId, groupId) {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
-      let events = dbo.collection('events').find({groupId: groupId})
+      let events = dbo.collection('events').find({groupId: groupId});
       events.forEach((event, i) => {
         if (!event.sentTo.includes(userId) && event._id !== userId) {
           notis.push(userId);
-          updateSentTo(event._id, [...event.sentTo, userId]).then(() => {
-            if(i === events.length-1) resolve(notis);
+          updateSentTo(event._id, [...event.sentTo, new ObjectId(userId)]).then(() => {
+            if (i === events.length - 1) resolve(notis);
           });
         }
       });
@@ -180,7 +199,7 @@ function checkEvents(userId, groupId) {
 }
 
 function updateSentTo(eventId, newSentTo) {
-  console.log("Update sent to");
+  console.log('Update sent to');
   const update = {
     $set: {
       sentTo: newSentTo,
@@ -190,8 +209,10 @@ function updateSentTo(eventId, newSentTo) {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
-      dbo.collection('events').updateOne({_id: eventId}, update, (err, res) => {
+      dbo.collection('events').updateOne({_id: new ObjectId(eventId)}, update, (err, res) => {
+        console.log(res);
         if (err) throw err;
+        db.close();
         resolve();
       });
     });

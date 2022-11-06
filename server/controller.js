@@ -31,17 +31,23 @@ app.post('/tigerhacks/userJoinGroup', (req, res) => {
   console.log(user);
   service.addToGroup(user).then(result => {
     result
-      ? res.send({error: false, message: '', user: result.user, group: result.group})
+      ? res.send({
+          error: false,
+          message: '',
+          user: result.user,
+          group: result.group,
+        })
       : res.send({error: true, message: 'Group does not exist.'});
   });
 });
 
 app.post('/tigerhacks/locationUpdate', (req, res) => {
   const userInfo = req.body; // {user: {_id, name, groupId, lkLoc, isOutside}, area: [{lat, long}]}
-  console.log(userInfo);
   service.updateLocation(userInfo.user, userInfo.area).then(() => {
-    service.checkEvents(userInfo.user.id, userInfo.user.groupId).then((result) => {
-      res.send({error: false, notifications: result})
-    })
-  })
+    service
+      .checkEvents(userInfo.user.id, userInfo.user.groupId)
+      .then(result => {
+        res.send({error: false, notifications: result});
+      });
+  });
 });
