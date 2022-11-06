@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Dimensions} from 'react-native';
+import {SafeAreaView, StyleSheet, Dimensions, Text, View} from 'react-native';
 import MapView, {Marker, Polygon} from 'react-native-maps';
 import { context } from '../globals';
 
@@ -23,6 +23,7 @@ export default function MenuMap({navigation}) {
         })
         .then(res => res.json())
         .then(res => {
+            console.log(res);
             setGroupLocations(res.locations);
         });
     }, 3000)
@@ -52,7 +53,11 @@ export default function MenuMap({navigation}) {
             <Marker 
                 key={i}
                 coordinate={user.lkLoc}
-            />
+            >
+                <View style={styles.marker}>
+                    <Text style={styles.text}>{user.name.slice(0,1)}</Text>
+                </View>
+            </Marker>
         ))}
       </MapView>
     </SafeAreaView>
@@ -69,4 +74,17 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  marker: {
+    borderColor: '#FFF',
+    backgroundColor: '#F00',
+    width: 25,
+    height: 25,
+    borderRadius: 25/2,
+    borderWidth: 3
+  },
+  text: {
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#FFF'
+  }
 });

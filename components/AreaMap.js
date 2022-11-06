@@ -84,8 +84,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   map: {
+    top: -13,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: Dimensions.get('window').height+1,
   },
   overlay: {
     position: 'absolute',

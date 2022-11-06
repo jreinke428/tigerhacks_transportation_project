@@ -47,6 +47,7 @@ export default function User({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BackButton navigation={navigation}/>
       <View style={[styles.ineomorphTop, {marginHorizontal: '25%'}]}>
         <View style={styles.ineomorphBottom}>
           <View style={styles.ineomorphInner}>

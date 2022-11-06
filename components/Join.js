@@ -9,6 +9,7 @@ import {
   Button,
 } from 'react-native';
 import {context} from '../globals';
+import BackButton from './BackButton';
 
 export default function Join({navigation}) {
   const [groupId, setGroupId] = React.useState('');
@@ -39,6 +40,7 @@ export default function Join({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BackButton navigation={navigation}/>
       <View style={[styles.ineomorphTop, {marginHorizontal: '25%'}]}>
         <View style={styles.ineomorphBottom}>
           <View style={styles.ineomorphInner}>

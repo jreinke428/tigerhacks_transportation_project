@@ -16,6 +16,7 @@ import MenuMap from './components/MenuMap';
 import Users from './components/Users';
 import Share from './components/Share';
 import MenuNavBar from './components/MenuNavBar';
+import BackButton from './components/BackButton';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state.',
@@ -61,7 +62,7 @@ export default function App() {
     <context.Provider value={{group, setGroup, user, setUser, startLocation}}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Group>
+          <Stack.Group screenOptions={{ headerShown: false}}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Group" component={CreateGroup} />
             <Stack.Screen name="Area" component={AreaMap} />
@@ -71,7 +72,7 @@ export default function App() {
           <Stack.Screen
             name="Menu"
             component={Menu}
-            options={{headerBackVisible: false}}
+            options={{headerBackVisible: false, headerStyle: {backgroundColor: '262b2b'}}}
           />
         </Stack.Navigator>
       </NavigationContainer>
