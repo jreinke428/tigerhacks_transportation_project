@@ -5,7 +5,7 @@ import {LogBox} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import * as Notifications from 'expo-notifications';
-import { context } from './globals';
+import {context} from './globals';
 
 import Home from './components/Home';
 import CreateGroup from './components/CreateGroup';
@@ -38,7 +38,6 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-
   React.useEffect(() => {
     checkNotifications();
     return () => BackgroundGeolocation.stopWatchPosition();
@@ -82,7 +81,7 @@ export default function App() {
 
 const checkNotifications = () => {
   Notifications.requestPermissionsAsync();
-}
+};
 
 const startLocation = (user, group) => {
   BackgroundGeolocation.ready(
@@ -94,7 +93,7 @@ const startLocation = (user, group) => {
     () => {
       BackgroundGeolocation.watchPosition(
         location => {
-          console.log('location sent ',group,user);
+          console.log('location sent ', group, user);
           fetch('http://localhost:3001/tigerhacks/locationUpdate', {
             method: 'POST',
             headers: {
@@ -113,23 +112,23 @@ const startLocation = (user, group) => {
               area: group.area,
             }),
           })
-          .then(res => res.json())
-          .then(res => {
-            console.log('res', res);
-            if (res.notifications.length) {
-              Notifications.scheduleNotificationAsync({
-                content: {
-                  title: 'Notification',
-                  body:
-                    res.notifications.join(' ,') +
-                    (res.notifications.length > 1 ? ' have' : ' has') +
-                    ' left the perimeter.',
-                  data: {data: 'goes here'},
-                },
-                trigger: {seconds: 1},
-              });
-            }
-          });
+            .then(res => res.json())
+            .then(res => {
+              console.log('res', res);
+              if (res.notifications.length) {
+                Notifications.scheduleNotificationAsync({
+                  content: {
+                    title: 'Notification',
+                    body:
+                      res.notifications.join(' ,') +
+                      (res.notifications.length > 1 ? ' have' : ' has') +
+                      ' left the perimeter.',
+                    data: {data: 'goes here'},
+                  },
+                  trigger: {seconds: 1},
+                });
+              }
+            });
         },
         errorCode => {
           console.log('error: ', errorCode);
@@ -142,4 +141,4 @@ const startLocation = (user, group) => {
       );
     },
   );
-}
+};
