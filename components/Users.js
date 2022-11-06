@@ -1,9 +1,9 @@
 import {SafeAreaView, StyleSheet} from 'react-native';
-import globals from '../globals';
+import context from '../globals';
 import MenuNavBar from './MenuNavBar';
 
 export default function Users({navigation}) {
-  const globals = React.useContext(globals);
+  const globals = React.useContext(context);
 
   return <SafeAreaView style={styles.container}></SafeAreaView>;
 }

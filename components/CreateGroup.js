@@ -1,13 +1,13 @@
 import React from 'react';
 import { Text, StyleSheet, SafeAreaView, TextInput, Button } from 'react-native';
-import globals from '../globals';
+import context from '../globals';
 
 export default function CreateGroup({ navigation }){
 
     const [name, setName] = React.useState('');
     const [area, setArea] = React.useState([]);
 
-    const globals = React.useContext(globals);
+    const globals = React.useContext(context);
 
     const createGroup = () => {
         fetch('http://localhost:3001/tigerhacks/createGroup', {

@@ -1,13 +1,13 @@
 import { StyleSheet, SafeAreaView, View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import React from 'react';
-import globals from '../globals';
+import context from '../globals';
 
 export default function AreaMap({ navigation }){
 
     const [markersCoords, setMarkersCoords] = React.useState([]);
 
-    const globals = React.useContext(globals);
+    const globals = React.useContext(context);
 
     React.useEffect(() => {
         setMarkersCoords(globals.group.area);

@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import globals from '../globals';
+import context from '../globals';
 
 export default function Join({navigation}) {
   const [groupId, setGroupId] = React.useState('');
 
-  const globals = React.useContext(globals);
+  const globals = React.useContext(context);
 
   const checkGroupId = () => {
     fetch('http://localhost:3001/tigerhacks/canJoinGroup', {

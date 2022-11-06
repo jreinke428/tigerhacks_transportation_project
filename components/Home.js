@@ -1,10 +1,10 @@
 import React from "react";
 const logo = require('../tabs.png');
 import { Button, SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import globals from "../globals";
+import context from "../globals";
 
 export default function Home({ navigation }){
-    const globals = React.useContext(globals);
+    const globals = React.useContext(context);
 
     return(
         <SafeAreaView style={styles.container}>

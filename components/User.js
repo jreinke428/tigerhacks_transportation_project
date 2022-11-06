@@ -1,12 +1,12 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import globals from "../globals";
+import context from "../globals";
 
 export default function User({ navigation }){
 
     const [name, setName] = React.useState('');
 
-    const globals = React.useContext(globals);
+    const globals = React.useContext(context);
 
     const userJoin = () => {
         fetch('http://localhost:3001/tigerhacks/userJoinGroup', {

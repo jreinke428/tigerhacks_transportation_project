@@ -1,11 +1,11 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Dimensions} from 'react-native';
 import MapView, {Polygon} from 'react-native-maps';
-import globals from '../globals';
+import context from '../globals';
 
 export default function MenuMap({navigation}) {
   const ref = React.useRef();
-  const globals = React.useContext(globals);
+  const globals = React.useContext(context);
 
   return (
     <SafeAreaView style={styles.container}>
