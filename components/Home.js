@@ -1,5 +1,5 @@
 import React from "react";
-const logo = require('../tabs.png');
+const logo = require('../tabs2.png');
 import { Button, SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { context } from "../globals";
 
@@ -8,7 +8,7 @@ export default function Home({ navigation }){
 
     return(
         <SafeAreaView style={styles.container}>
-            <Image source={logo}></Image>
+            <Image style={{marginHorizontal: '15%'}} source={logo}></Image>
             <TouchableOpacity style={[styles.neomorphTop, styles.horizontal]}>
                 <TouchableOpacity style={styles.neomorphBottom}>
                     <TouchableOpacity style={styles.neomorphInner}>
