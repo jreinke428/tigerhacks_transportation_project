@@ -1,9 +1,8 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogBox, StyleSheet } from "react-native";
+import { LogBox } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { color } from "react-native-elements/dist/helpers";
 import BackgroundGeolocation from "react-native-background-geolocation";
 import * as Notifications from "expo-notifications";
 
@@ -18,7 +17,10 @@ import Users from './components/Users';
 import Share from './components/Share';
 import MenuNavBar from "./components/MenuNavBar";
 
-LogBox.ignoreLogs(['Non-serializable values were found in the navigation state.']);
+LogBox.ignoreLogs(['Non-serializable values were found in the navigation state.', 
+                  'Sending `providerchange` with no listeners registered.',
+                  'Sending `location` with no listeners registered.',
+                  'Sending `watchposition` with no listeners registered.']);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -39,44 +41,43 @@ export default function App(){
     BackgroundGeolocation.ready({
       logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
       debug: false,
-      stopOnTerminate: false,
-      startOnBoot: true
+      stopOnTerminate: true
+    }, () => {
+      BackgroundGeolocation.watchPosition((location) => {
+        console.log(location);
+        if(!(group.id && user.id)) return
+        fetch('http://localhost:3001/tigerhacks/locationUpdate', {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify({user: {id: user.id, name: user.name, groupId: group.id, lkLoc: {longitude: location.coords.longitude, latitude: location.coords.latitude}}, area: group.area})
+        })
+        .then(res => res.json())
+        .then(res => {
+          console.log('res', res);
+          if(res.notifications.length){
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: "Notification",
+                body: names.join(' ,') + (res.notifications.length > 1 ? ' have' : ' has') + ' left the perimeter.',
+                data: { data: 'goes here' },
+              },
+              trigger: { seconds: 0.1 },
+            });
+          }
+        })
+      }, (errorCode) => {
+        console.log("error: ", errorCode);
+      }, {
+        interval: 15000,
+        desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+        persist: true,
+        timeout: 5000
+      });
     })
-
-    BackgroundGeolocation.watchPosition((location) => {
-      if(!(group.id && user.id)) return
-      console.log('location '+user.name);
-      fetch('http://localhost:3001/tigerhacks/locationUpdate', {
-        method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({user: {id: user.id, name: user.name, groupId: group.id, lkLoc: {longitude: location.coords.longitude, latitude: location.coords.latitude}}, area: group.area})
-      })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        if(res.notifications.length){
-          Notifications.scheduleNotificationAsync({
-            content: {
-              title: "Notification",
-              body: names.join(' ,') + (res.notifications.length > 1 ? ' have' : ' has') + ' left the perimeter.',
-              data: { data: 'goes here' },
-            },
-            trigger: { seconds: 0.1 },
-          });
-        }
-      })
-    }, (errorCode) => {
-      console.log("error: ", errorCode);
-    }, {
-      interval: 15000,
-      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-      persist: true,
-      timeout: 5000
-    });
     return () => BackgroundGeolocation.stopWatchPosition();
-  });
+  }, []);
 
   const [group, setGroup] = React.useState({name: '', area: [], id: ''});
   const [user, setUser] = React.useState({name: '', id: ''});
@@ -91,7 +92,7 @@ export default function App(){
   return(
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Group screenOptions={{ headerStyle: styles.darkShadow}}>
+        <Stack.Group>
           <Stack.Screen name='Home' component={Home} />
           <Stack.Screen name='Group' component={CreateGroup} initialParams={{ setGroup }}/>
           <Stack.Screen name='Area' component={AreaMap} />
@@ -103,22 +104,3 @@ export default function App(){
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  lightShadow: {
-    backgroundColor: GRAY,
-    borderRadius: 10,
-    shadowOpacity: 1,
-    shadowRadius: 6,
-    shadowOffset: {width: -6, height: -6},
-    shadowColor: color(GRAY).lighten(0.5).alpha(0.5)
-  },
-  darkShadow: {
-    backgroundColor: GRAY,
-    borderRadius: 10,
-    shadowOpacity: 1,
-    shadowRadius: 6,
-    shadowOffset: {width: 6, height: 6},
-    shadowColor: color(GRAY).darken(0.3).alpha(0.5)
-  }
-})
