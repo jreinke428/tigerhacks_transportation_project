@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import context from "../globals";
+import { context } from "../globals";
 
 export default function User({ navigation }){
 
@@ -22,7 +22,8 @@ export default function User({ navigation }){
         .then(res => res.json())
         .then(res => {
             globals.setUser({ name , id: res.user._id});
-            globals.params.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
+            globals.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
+            globals.startLocation();
             navigation.navigate('Menu');
         })
         .catch(err => console.log(err));

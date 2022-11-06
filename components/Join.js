@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import context from '../globals';
+import { context } from '../globals';
 
 export default function Join({navigation}) {
   const [groupId, setGroupId] = React.useState('');

@@ -1,2 +1,2 @@
 import React from "react";
-export default React.createContext();
+export const context =  React.createContext({group: {name: '', area: [], id: ''}, user: {name: '', id: ''}});

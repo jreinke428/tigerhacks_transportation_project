@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, View, Dimensions, Text, TouchableOpacity} from 'react-native';
 import MapView, { Marker, Polygon } from 'react-native-maps';
 import React from 'react';
-import context from '../globals';
+import { context } from '../globals';
 
 export default function AreaMap({ navigation }){
 

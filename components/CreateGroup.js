@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text, StyleSheet, SafeAreaView, TextInput, Button } from 'react-native';
-import context from '../globals';
+import { context } from '../globals';
 
 export default function CreateGroup({ navigation }){
 
     const [name, setName] = React.useState('');
-    const [area, setArea] = React.useState([]);
 
     const globals = React.useContext(context);
 
@@ -17,12 +16,12 @@ export default function CreateGroup({ navigation }){
             },
             body: JSON.stringify({
                 name: name,
-                area: area
+                area: globals.group.area
             })
         })
         .then(res => res.json())
         .then(res => {
-            globals.setGroup({ name, area, id: res.groupId });
+            globals.setGroup(group => ({ ...group, name, id: res.groupId }));
             navigation.navigate('User');
         })
         .catch(err => console.log(err));
@@ -31,7 +30,7 @@ export default function CreateGroup({ navigation }){
     return(
         <SafeAreaView style={styles.container}>
             <TextInput style={styles.text} placeholder='Group Name' onChangeText={t => setName(t)}/>
-            <Button title={area.length ? 'Edit Area' : 'Create Area'} onPress={() => navigation.navigate('Area', {area, setArea})}/>
+            <Button title={globals.group.area.length ? 'Edit Area' : 'Create Area'} onPress={() => navigation.navigate('Area')}/>
             <Button title='Create Group' onPress={createGroup}/>
         </SafeAreaView>
     )

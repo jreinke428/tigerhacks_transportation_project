@@ -1,5 +1,5 @@
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
-import context from '../globals';
+import { context } from '../globals';
 
 export default function Share({navigation}) {
   const globals = React.useContext(context);

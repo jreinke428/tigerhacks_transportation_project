@@ -5,7 +5,7 @@ import {LogBox} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import * as Notifications from 'expo-notifications';
-import AppContext from './globals';
+import { context } from './globals';
 
 import Home from './components/Home';
 import CreateGroup from './components/CreateGroup';
@@ -38,8 +38,8 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-  React.useEffect(() => {
-    console.log('useEffect');
+
+  const startLocation = () => {
     BackgroundGeolocation.ready(
       {
         logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
@@ -49,9 +49,7 @@ export default function App() {
       () => {
         BackgroundGeolocation.watchPosition(
           location => {
-            console.log(globals);
-            if (!(group.id && user.id)) return;
-            console.log('location sent');
+            console.log('location sent ',group,user);
             fetch('http://localhost:3001/tigerhacks/locationUpdate', {
               method: 'POST',
               headers: {
@@ -99,12 +97,13 @@ export default function App() {
         );
       },
     );
+  }
+  React.useEffect(() => {
     return () => BackgroundGeolocation.stopWatchPosition();
-  }, []);
+  });
 
   const [group, setGroup] = React.useState({name: '', area: [], id: ''});
   const [user, setUser] = React.useState({name: '', id: ''});
-  const globals = {group, setGroup, user, setUser};
 
   const Menu = () => (
     <Tab.Navigator
@@ -118,7 +117,7 @@ export default function App() {
   );
 
   return (
-    <AppContext.Provider value={globals}>
+    <context.Provider value={{group, setGroup, user, setUser, startLocation}}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Group>
@@ -135,6 +134,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </AppContext.Provider>
+    </context.Provider>
   );
 }
