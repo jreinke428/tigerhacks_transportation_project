@@ -6,6 +6,7 @@ export default function User({ navigation, route }){
     const [name, setName] = React.useState('');
 
     const userJoin = () => {
+        console.log(route.params);
         fetch('http://localhost:3001/tigerhacks/userJoinGroup', {
             method: 'POST',
             headers: {
@@ -18,6 +19,7 @@ export default function User({ navigation, route }){
         })
         .then(res => res.json())
         .then(res => {
+            console.log(res);
             route.params.setUser({ name , id: res.user._id});
             route.params.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
             navigation.navigate('Menu');

@@ -19,8 +19,8 @@ export default function CreateGroup({ navigation, route }){
         })
         .then(res => res.json())
         .then(res => {
-            route.params.setGroup({ name, area, id: res._id })
-            navigation.navigate('User');
+            route.params.setGroup({ name, area, id: res.groupId });
+            navigation.navigate('User', {group: {id: res.groupId}});
         })
         .catch(err => console.log(err));
     }

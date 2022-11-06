@@ -17,8 +17,11 @@ export default function Join({ navigation, route}){
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
-            res.error ? console.log(res.message) : navigation.navigate('User');
+            if(res.error){
+                navigation.navigate('User', {group: {id: groupId}});
+            }else{
+                console.log(res.message);
+            }
         })
         .catch(err => {});
     }

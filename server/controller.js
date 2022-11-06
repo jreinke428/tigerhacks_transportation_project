@@ -8,11 +8,12 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.post('/tigerhacks/createGroup', (req, res) => {
   const newGroup = req.body;
-  let groupId = service.createNewGroup(newGroup.groupOpts);
-  res.send({
-    error: false,
-    message: 'Success',
-    groupId: groupId,
+  let groupId = service.createNewGroup(newGroup).then(gId => {
+    res.send({
+      error: false,
+      message: 'Success',
+      groupId: gId,
+    });
   });
 });
 
@@ -27,18 +28,20 @@ app.post('/tigerhacks/canJoinGroup', (req, res) => {
 
 app.post('/tigerhacks/userJoinGroup', (req, res) => {
   const user = req.body;
-  service.addToGroup(user.name, user.groupId).then(result => {
+  console.log(user);
+  service.addToGroup(user).then(result => {
     result
-      ? res.send({error: false, message: '', user: result})
+      ? res.send({error: false, message: '', user: result.user, group: result.group})
       : res.send({error: true, message: 'Group does not exist.'});
   });
 });
 
 app.post('/tigerhacks/locationUpdate', (req, res) => {
   const userInfo = req.body; // {user: {_id, name, groupId, lkLoc, isOutside}, area: [{lat, long}]}
-  service.updateLocation(userInfo.user, userInfo.area).then((res) => {
-    service.checkEvents(userInfo.user._id, userInfo.user.groupId).then((res) => {
-      res.send({error: false, notifications: res})
+  console.log(userInfo);
+  service.updateLocation(userInfo.user, userInfo.area).then(() => {
+    service.checkEvents(userInfo.user.id, userInfo.user.groupId).then((result) => {
+      res.send({error: false, notifications: result})
     })
   })
 });

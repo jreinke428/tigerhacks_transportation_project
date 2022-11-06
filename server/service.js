@@ -73,7 +73,7 @@ function canJoinGroup(groupId) {
       const query = {_id: groupId};
       dbo.collection('groups').findOne(query, function (err, res) {
         if (err) throw err;
-        resolve(result);
+        resolve(res);
         db.close();
       });
     });
@@ -107,7 +107,8 @@ function isPointOutside(area, lkLoc) {
 // Accepts a full user object and an area.
 // Updates user location and determines if user is outside of geofence.
 function updateLocation(user, area) {
-  const query = {_id: user._id};
+  console.log(`Updating location ${user.name}`);
+  const query = {_id: user.id};
   const curLoc = {
     latitude: user.lkLoc.latitude,
     longitude: user.lkLoc.longitude,
@@ -122,11 +123,14 @@ function updateLocation(user, area) {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
       dbo.collection('users').updateOne(query, update, (err, res) => {
+        console.log('res '+JSON.stringify(res));
         if (err) throw err;
-        dbo.collection('events').findOne({_id: res._id}, (err, res) => {
+        dbo.collection('events').findOne({_id: user.id}, (err, res) => {
           if (res) {
             if (!isPointOutside(area, curLoc)) {
               dbo.collection('events').findOneAndDelete(query);
+              resolve();
+            }else{
               resolve();
             }
           } else {
@@ -143,6 +147,8 @@ function updateLocation(user, area) {
                   resolve();
                 },
               );
+            }else{
+              resolve();
             }
           }
         });
@@ -160,24 +166,24 @@ function checkEvents(userId, groupId) {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
-      dbo
-        .collection('events')
-        .find({groupId: groupId})
-        .forEach(event => {
-          if (!event.sentTo.includes(userId) && event._id !== userId) {
-            notis.push(event.name);
-            updateSentTo(event.eventId, event.sentTo, userId).then(() => {});
-          }
-        });
-      resolve(notis);
+      let events = dbo.collection('events').find({groupId: groupId})
+      events.forEach((event, i) => {
+        if (!event.sentTo.includes(userId) && event._id !== userId) {
+          notis.push(userId);
+          updateSentTo(event._id, [...event.sentTo, userId]).then(() => {
+            if(i === events.length-1) resolve(notis);
+          });
+        }
+      });
     });
   });
 }
 
-function updateSentTo(eventId, oldArray, userId) {
+function updateSentTo(eventId, newSentTo) {
+  console.log("Update sent to");
   const update = {
     $set: {
-      sentTo: oldArray.push(userId),
+      sentTo: newSentTo,
     },
   };
   return new Promise((resolve, reject) => {

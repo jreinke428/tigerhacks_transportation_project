@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* tigerhacks_transportation_projectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* tigerhacks_transportation_projectTests.m */; };
+		0894F7B66C4986403BA694AC /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E7A77651F37248E9AE30FB /* ExpoModulesProvider.swift */; };
 		0C80B921A6F3F58F76C31292 /* libPods-tigerhacks_transportation_project.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-tigerhacks_transportation_project.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		66A7DC9A1B20442EECD266B8 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584D28D0C85E449CFBDE6ABB /* ExpoModulesProvider.swift */; };
 		7699B88040F8A987B510C191 /* libPods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		FA4E6A4F2916B992001A83CB /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FA4E6A3F2916B992001A83CB /* Fontisto.ttf */; };
@@ -55,10 +57,12 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-tigerhacks_transportation_project.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tigerhacks_transportation_project.debug.xcconfig"; path = "Target Support Files/Pods-tigerhacks_transportation_project/Pods-tigerhacks_transportation_project.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-tigerhacks_transportation_project.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tigerhacks_transportation_project.release.xcconfig"; path = "Target Support Files/Pods-tigerhacks_transportation_project/Pods-tigerhacks_transportation_project.release.xcconfig"; sourceTree = "<group>"; };
+		584D28D0C85E449CFBDE6ABB /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-tigerhacks_transportation_project/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.debug.xcconfig"; path = "Target Support Files/Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests/Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-tigerhacks_transportation_project.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tigerhacks_transportation_project.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = tigerhacks_transportation_project/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.release.xcconfig"; path = "Target Support Files/Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests/Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.release.xcconfig"; sourceTree = "<group>"; };
+		97E7A77651F37248E9AE30FB /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FA4E6A3F2916B992001A83CB /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		FA4E6A402916B992001A83CB /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 		FA4E6A4C2916B992001A83CB /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		FA4E6A4D2916B992001A83CB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		FA4E6A4E2916B992001A83CB /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		FA4E6A5F29172894001A83CB /* tigerhacks_transportation_project.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = tigerhacks_transportation_project.entitlements; path = tigerhacks_transportation_project/tigerhacks_transportation_project.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +123,7 @@
 		13B07FAE1A68108700A75B9A /* tigerhacks_transportation_project */ = {
 			isa = PBXGroup;
 			children = (
+				FA4E6A5F29172894001A83CB /* tigerhacks_transportation_project.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -139,6 +145,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7F749DF93957A65B29D64968 /* tigerhacks_transportation_project */ = {
+			isa = PBXGroup;
+			children = (
+				584D28D0C85E449CFBDE6ABB /* ExpoModulesProvider.swift */,
+			);
+			name = tigerhacks_transportation_project;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +169,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				AD15623462C86047B31A253C /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -170,6 +185,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		AD15623462C86047B31A253C /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				7F749DF93957A65B29D64968 /* tigerhacks_transportation_project */,
+				F48FA5456A14B01F4FC5D5B0 /* tigerhacks_transportation_projectTests */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +203,14 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-tigerhacks_transportation_project-tigerhacks_transportation_projectTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F48FA5456A14B01F4FC5D5B0 /* tigerhacks_transportation_projectTests */ = {
+			isa = PBXGroup;
+			children = (
+				97E7A77651F37248E9AE30FB /* ExpoModulesProvider.swift */,
+			);
+			name = tigerhacks_transportation_projectTests;
 			sourceTree = "<group>";
 		};
 		FA4E6A3E2916B992001A83CB /* Fonts */ = {
@@ -478,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* tigerhacks_transportation_projectTests.m in Sources */,
+				0894F7B66C4986403BA694AC /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +520,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				66A7DC9A1B20442EECD266B8 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,7 +545,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = tigerhacks_transportation_projectTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -522,6 +556,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tigerhacks_transportation_project.app/tigerhacks_transportation_project";
@@ -535,7 +570,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = tigerhacks_transportation_projectTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -546,6 +581,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tigerhacks_transportation_project.app/tigerhacks_transportation_project";
@@ -558,6 +594,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = tigerhacks_transportation_project/tigerhacks_transportation_project.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = tigerhacks_transportation_project/Info.plist;
@@ -570,6 +607,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tigerhacks_transportation_project;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -584,6 +622,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = tigerhacks_transportation_project/tigerhacks_transportation_project.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = tigerhacks_transportation_project/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -595,6 +634,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = tigerhacks_transportation_project;
 				SWIFT_VERSION = 5.0;
@@ -651,7 +691,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -716,7 +756,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

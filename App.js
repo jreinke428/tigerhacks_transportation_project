@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogBox, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { color } from "react-native-elements/dist/helpers";
+import BackgroundGeolocation from "react-native-background-geolocation";
+import * as Notifications from "expo-notifications";
+
 
 import Home from './components/Home';
 import CreateGroup from "./components/CreateGroup";
@@ -22,7 +25,58 @@ const Tab = createBottomTabNavigator();
 
 const GRAY = '#3d3d3d';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function App(){
+
+  React.useEffect(() => {
+    BackgroundGeolocation.ready({
+      logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
+      debug: false,
+      stopOnTerminate: false,
+      startOnBoot: true
+    })
+
+    BackgroundGeolocation.watchPosition((location) => {
+      if(!(group.id && user.id)) return
+      console.log('location '+user.name);
+      fetch('http://localhost:3001/tigerhacks/locationUpdate', {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({user: {id: user.id, name: user.name, groupId: group.id, lkLoc: {longitude: location.coords.longitude, latitude: location.coords.latitude}}, area: group.area})
+      })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if(res.notifications.length){
+          Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Notification",
+              body: names.join(' ,') + (res.notifications.length > 1 ? ' have' : ' has') + ' left the perimeter.',
+              data: { data: 'goes here' },
+            },
+            trigger: { seconds: 0.1 },
+          });
+        }
+      })
+    }, (errorCode) => {
+      console.log("error: ", errorCode);
+    }, {
+      interval: 15000,
+      desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+      persist: true,
+      timeout: 5000
+    });
+    return () => BackgroundGeolocation.stopWatchPosition();
+  });
 
   const [group, setGroup] = React.useState({name: '', area: [], id: ''});
   const [user, setUser] = React.useState({name: '', id: ''});
