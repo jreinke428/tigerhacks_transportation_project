@@ -43,8 +43,8 @@ app.post('/tigerhacks/userJoinGroup', (req, res) => {
 
 app.post('/tigerhacks/locationUpdate', (req, res) => {
   const userInfo = req.body; // {user: {_id, name, groupId, lkLoc, isOutside}, area: [{lat, long}]}
-  console.log(userInfo)
   service.updateLocation(userInfo.user, userInfo.area).then(() => {
+    console.log('about to check events');
     service
       .checkEvents(userInfo.user.id, userInfo.user.groupId)
       .then(result => {

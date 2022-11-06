@@ -139,12 +139,13 @@ function updateLocation(user, area) {
       let dbo = db.db(DB_NAME);
       dbo.collection('users').updateOne(query, update, (err, res) => {
         //console.log('res ' + JSON.stringify(res));
+        console.log(res);
         if (err) throw err;
         dbo.collection('events').findOne(query, (err, res) => {
           console.log(res);
+          let outside = isPointOutside(area, curLoc);
           if (res) {
-            console.log('event found');
-            if (!isPointOutside(area, curLoc)) {
+            if (!outside) {
               console.log('im finna delete');
               dbo.collection('events').findOneAndDelete(query);
               resolve();
@@ -153,7 +154,7 @@ function updateLocation(user, area) {
             }
           } else {
             console.log('event not found');
-            if (isPointOutside(area, curLoc)) {
+            if (outside) {
               dbo.collection('events').insertOne(
                 {
                   _id: new ObjectId(user.id),
@@ -162,7 +163,6 @@ function updateLocation(user, area) {
                   groupId: user.groupId,
                 },
                 (err, res) => {
-                  if (err) throw err;
                   resolve();
                 },
               );
@@ -181,23 +181,23 @@ function updateLocation(user, area) {
 // Returns an array of names that must be sent out.
 function checkEvents(userId, groupId) {
   let notis = [];
+  console.log('check events');
   return new Promise((resolve, reject) => {
     MongoClient.connect(URL, (err, db) => {
       if (err) throw err;
       let dbo = db.db(DB_NAME);
-      let events = dbo.collection('events').find({groupId: groupId});
-      events.forEach((event, i) => {
-        if (
-          !event.sentTo.includes(new ObjectId(userId)) &&
-          event._id !== userId
-        ) {
-          notis.push(userId);
-          updateSentTo(event._id, [...event.sentTo, new ObjectId(userId)]).then(
-            () => {
-              if (i === events.length - 1) resolve(notis);
-            },
-          );
+      dbo.collection('events').find({groupId: groupId}).toArray((err, result) => {
+        console.log(err, result);
+        for(let i=0; i<result.length; i++){
+          if(!result[i].sentTo.map(id => id.toString()).includes(userId) && userId !== result[i]._id.toString()){
+            notis.push(result[i].name);
+            updateSentTo(result[i]._id, [...result[i].sentTo, new ObjectId(userId)])
+            .then(() => {
+              if(i === result.length-1) resolve(notis);
+            })
+          }
         }
+        if(result.length === 0) resolve(notis);
       });
     });
   });
@@ -216,7 +216,7 @@ function updateSentTo(eventId, newSentTo) {
       let dbo = db.db(DB_NAME);
       dbo
         .collection('events')
-        .updateOne({_id: new ObjectId(eventId)}, update, (err, res) => {
+        .updateOne({_id: eventId}, update, (err, res) => {
           console.log(res);
           if (err) throw err;
           db.close();

@@ -39,65 +39,6 @@ Notifications.setNotificationHandler({
 
 export default function App() {
 
-  const startLocation = () => {
-    BackgroundGeolocation.ready(
-      {
-        logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
-        debug: false,
-        stopOnTerminate: true,
-      },
-      () => {
-        BackgroundGeolocation.watchPosition(
-          location => {
-            console.log('location sent ',group,user);
-            fetch('http://localhost:3001/tigerhacks/locationUpdate', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                user: {
-                  id: user.id,
-                  name: user.name,
-                  groupId: group.id,
-                  lkLoc: {
-                    longitude: location.coords.longitude,
-                    latitude: location.coords.latitude,
-                  },
-                },
-                area: group.area,
-              }),
-            })
-              .then(res => res.json())
-              .then(res => {
-                console.log('res', res);
-                if (res.notifications.length) {
-                  Notifications.scheduleNotificationAsync({
-                    content: {
-                      title: 'Notification',
-                      body:
-                        names.join(' ,') +
-                        (res.notifications.length > 1 ? ' have' : ' has') +
-                        ' left the perimeter.',
-                      data: {data: 'goes here'},
-                    },
-                    trigger: {seconds: 0.1},
-                  });
-                }
-              });
-          },
-          errorCode => {
-            console.log('error: ', errorCode);
-          },
-          {
-            interval: 15000,
-            desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
-            timeout: 5000,
-          },
-        );
-      },
-    );
-  }
   React.useEffect(() => {
     return () => BackgroundGeolocation.stopWatchPosition();
   });
@@ -135,5 +76,65 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </context.Provider>
+  );
+}
+
+const startLocation = (user, group) => {
+  BackgroundGeolocation.ready(
+    {
+      logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
+      debug: false,
+      stopOnTerminate: true,
+    },
+    () => {
+      BackgroundGeolocation.watchPosition(
+        location => {
+          console.log('location sent ',group,user);
+          fetch('http://localhost:3001/tigerhacks/locationUpdate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              user: {
+                id: user.id,
+                name: user.name,
+                groupId: group.id,
+                lkLoc: {
+                  longitude: location.coords.longitude,
+                  latitude: location.coords.latitude,
+                },
+              },
+              area: group.area,
+            }),
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log('res', res);
+              if (res.notifications.length) {
+                Notifications.scheduleNotificationAsync({
+                  content: {
+                    title: 'Notification',
+                    body:
+                      res.notifications.join(' ,') +
+                      (res.notifications.length > 1 ? ' have' : ' has') +
+                      ' left the perimeter.',
+                    data: {data: 'goes here'},
+                  },
+                  trigger: {seconds: 1},
+                });
+              }
+            });
+        },
+        errorCode => {
+          console.log('error: ', errorCode);
+        },
+        {
+          interval: 10000,
+          desiredAccuracy: BackgroundGeolocation.DESIRED_ACCURACY_HIGH,
+          timeout: 50000,
+        },
+      );
+    },
   );
 }

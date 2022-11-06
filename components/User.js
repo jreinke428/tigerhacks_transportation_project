@@ -23,8 +23,11 @@ export default function User({ navigation }){
         .then(res => {
             globals.setUser({ name , id: res.user._id});
             globals.setGroup({ name: res.group.name, id: res.group._id, area: res.group.area});
-            globals.startLocation();
-            navigation.navigate('Menu');
+            new Promise(resolve => setTimeout(resolve, 200))
+            .then(() => {
+                globals.startLocation({name, id: res.user._id}, {name: res.group.name, id: res.group._id, area: res.group.area});
+                navigation.navigate('Menu');
+            })
         })
         .catch(err => console.log(err));
     }
