@@ -119,11 +119,11 @@ const startLocation = (user, group) => {
               if (res.notifications.length) {
                 Notifications.scheduleNotificationAsync({
                   content: {
-                    title: 'Notification',
+                    title: 'Perimeter Breach',
                     body:
                       res.notifications.join(' ,') +
                       (res.notifications.length > 1 ? ' have' : ' has') +
-                      ' left the perimeter.',
+                      ' left the perimeter. Go check up on them!',
                     data: {data: 'goes here'},
                   },
                   trigger: {seconds: 1},

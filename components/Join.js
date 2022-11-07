@@ -57,7 +57,7 @@ export default function Join({navigation}) {
       <TouchableOpacity style={[styles.neomorphTop, {marginHorizontal: '25%'}]}>
         <TouchableOpacity style={styles.neomorphBottom}>
           <TouchableOpacity style={styles.blueNeomorphInner}>
-            <Button title="Create Group" onPress={checkGroupId} color="white" />
+            <Button title="Join Group" onPress={checkGroupId} color="white" />
           </TouchableOpacity>
         </TouchableOpacity>
       </TouchableOpacity>

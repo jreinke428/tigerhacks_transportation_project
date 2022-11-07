@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   shareCode: {
     textAlign: 'center',
     color: 'white',
-    fontSize: 50,
+    fontSize: 45,
   },
   ineomorphInner: {
     backgroundColor: '#232427',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     shadowOffset: {width: -5, height: -5},
-    marginTop: 30,
+    marginBottom: 100,
   },
   neomorphBottom: {
     borderRadius: 10,
